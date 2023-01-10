@@ -1,18 +1,5 @@
-import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-
-const IssueItem = ({
-  title,
-  number,
-  assignee,
-  commentCount,
-  createdBy,
-  createdDate,
-  labels,
-  status,
-}) => {
-  return <li>{title}</li>;
-};
+import { IssueItem } from "./IssueItem";
 
 export default function IssuesList() {
   const issuesQuery = useQuery(["issues"], () =>
