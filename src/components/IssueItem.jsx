@@ -14,12 +14,20 @@ export const IssueItem = ({
   return (
     <li>
       <div>
-        <GoIssueOpened style={{ color: "green" }} />
+        {status === "done" || status === "cancelled" ? (
+          <GoIssueClosed style={{ color: "red" }} />
+        ) : (
+          <GoIssueOpened style={{ color: "green" }} />
+        )}
       </div>
       <div className="issue-content">
         <span>
           <a href="">{title}</a>
-          <span className="label">{labels}</span>
+          {labels.map((label) => (
+            <span key={label} className={`label red`}>
+              {label}
+            </span>
+          ))}
         </span>
         <small>
           #{number} opened {relativeDate(createdDate)} by {createdBy}

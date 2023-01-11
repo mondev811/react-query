@@ -13,6 +13,7 @@ export default function IssuesList() {
       ) : (
         <ul className="issues-list">
           {issuesQuery.data.map((item) => {
+            console.log("item: ", item);
             return (
               <IssueItem
                 key={item.id}
