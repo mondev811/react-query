@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export default function LabelList() {
+export default function LabelList({ setLabelSelected }) {
   const labelsQuery = useQuery(["labels"], () =>
     fetch("/api/labels").then((res) => res.json())
   );
@@ -15,7 +15,12 @@ export default function LabelList() {
             {labelsQuery.data.map((label) => {
               return (
                 <li key={label.id}>
-                  <button className={label.color}>{label.name}</button>
+                  <button
+                    className={label.color}
+                    onClick={() => setLabelSelected(label.id)}
+                  >
+                    {label.name}
+                  </button>
                 </li>
               );
             })}
