@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLabels } from "../helpers/useLabels";
+import { useLabelsData } from "../helpers/queryhooks";
 
 export const Label = ({ label }) => {
-  const { data, isLoading, isSuccess } = useLabels();
+  const { data, isLoading, isSuccess } = useLabelsData();
   const [currentLabel, setCurrentLabel] = useState({
     name: undefined,
     id: undefined,

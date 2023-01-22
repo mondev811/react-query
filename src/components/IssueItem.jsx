@@ -1,6 +1,6 @@
 import { GoComment, GoIssueOpened } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
-import { useUserData } from "../helpers/useUserData";
+import { useUserData } from "../helpers/queryhooks";
 import { Label } from "../components/Label";
 export const IssueItem = ({
   title,

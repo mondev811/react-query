@@ -1,7 +1,7 @@
-import { useLabels } from "../helpers/useLabels";
+import { useLabelsData } from "../helpers/queryhooks";
 
 export default function LabelList({ setLabelSelected }) {
-  const { data, isLoading, isSuccess } = useLabels();
+  const { data, isLoading, isSuccess } = useLabelsData();
 
   return (
     <>
