@@ -1,7 +1,7 @@
 import { GoComment, GoIssueOpened } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
 import { useUserData } from "../helpers/useUserData";
-
+import { Label } from "../components/Label";
 export const IssueItem = ({
   title,
   number,
@@ -27,9 +27,7 @@ export const IssueItem = ({
         <span>
           <a href={`/issue/${number}`}>{title}</a>
           {labels.map((label) => (
-            <span key={label} className={`label red`}>
-              {label}
-            </span>
+            <Label label={label} key={label} />
           ))}
         </span>
         <small>{`#${number} opened ${relativeDate(createdDate)} by 

@@ -1,18 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
+import { useLabels } from "../helpers/useLabels";
 
 export default function LabelList({ setLabelSelected }) {
-  const labelsQuery = useQuery(["labels"], () =>
-    fetch("/api/labels").then((res) => res.json())
-  );
+  const { data, isLoading, isSuccess } = useLabels();
 
   return (
     <>
-      {labelsQuery.isLoading && <p>Loading labels...</p>}
-      {labelsQuery.isSuccess && (
+      {isLoading && <p>Loading labels...</p>}
+      {isSuccess && (
         <div className="labels">
           <h3>Labels</h3>
           <ul>
-            {labelsQuery.data.map((label) => {
+            {data.map((label) => {
               return (
                 <li key={label.id}>
                   <button
