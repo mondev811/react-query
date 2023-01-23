@@ -1,6 +1,6 @@
 import { GoComment, GoIssueOpened } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
-import { useUserData } from "../helpers/queryhooks";
+import { useUserData, useLabelsData } from "../helpers/queryhooks";
 import { Label } from "../components/Label";
 export const IssueItem = ({
   title,
@@ -14,6 +14,8 @@ export const IssueItem = ({
 }) => {
   const assigneeUser = useUserData(assignee);
   const createdByUser = useUserData(createdBy);
+  const labelObjects = useLabelsData();
+
   return (
     <li>
       <div>
@@ -26,9 +28,11 @@ export const IssueItem = ({
       <div className="issue-content">
         <span>
           <a href={`/issue/${number}`}>{title}</a>
-          {labels.map((label) => (
-            <Label label={label} key={label} />
-          ))}
+          {labelObjects.isSuccess &&
+            labels.map((label) => {
+              const labelObj = labelObjects.data.find((l) => l.id === label);
+              return <Label label={labelObj} key={labelObj.id} />;
+            })}
         </span>
         <small>{`#${number} opened ${relativeDate(createdDate)} by 
        ${createdByUser.isSuccess ? createdByUser.data.name : ""}`}</small>

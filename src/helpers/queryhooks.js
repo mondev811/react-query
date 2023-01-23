@@ -4,8 +4,8 @@ export const useLabelsData = () => {
   const labelsQuery = useQuery(["labels"], () =>
     fetch("/api/labels").then((res) => res.json())
   );
-  const { data, isLoading, isSuccess } = labelsQuery;
-  return { data, isLoading, isSuccess };
+
+  return labelsQuery;
 };
 
 export const useUserData = (userId) => {
@@ -22,10 +22,18 @@ export const useUserData = (userId) => {
   return usersData;
 };
 
-export const useIssuesData = () => {
-  const issuesQuery = useQuery(["issues"], () =>
-    fetch("/api/issues").then((res) => res.json())
-  );
+export const useIssuesData = (filters) => {
+  const labelsString =
+    filters[0] === "*"
+      ? ""
+      : filters.map((label) => `labels[]=${label}`).join("&");
+  const issuesQuery = useQuery({
+    queryKey: ["issues", filters],
+    queryFn: () => {
+      return fetch(`/api/issues?${labelsString}`).then((res) => res.json());
+    },
+    keepPreviousData: true,
+  });
 
   return issuesQuery;
 };
