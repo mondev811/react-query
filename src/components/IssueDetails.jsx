@@ -60,7 +60,7 @@ export default function IssueDetails() {
           <section>
             {commentsQuery.isSuccess &&
               commentsQuery.data.map((c) => {
-                return <p>{c.comment}</p>;
+                return <p key={c.id}>{c.comment}</p>;
               })}
           </section>
         </main>
