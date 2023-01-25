@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { useUserData } from "../helpers/queryhooks";
 import { relativeDate } from "../helpers/relativeDate";
 
 const useIssueData = (issueNumber) => {
@@ -8,32 +9,33 @@ const useIssueData = (issueNumber) => {
   });
 };
 
-const Comment = ({ issueNumber, commentId }) => {
-  console.log(commentId);
-  const commentsQuery = useQuery(["issues", issueNumber, "comments"], () => {
-    return fetch(`/api/issues/${issueNumber}/comments`).then((res) =>
-      res.json()
-    );
-  });
-
-  if (commentsQuery.isLoading) return <p>Loading comments...</p>;
-  if (commentsQuery.isSuccess) {
-    const comment = commentsQuery.data.find((c) => c.id === commentId);
-    console.log(commentsQuery.data);
+const Comment = ({ comment }) => {
+  const userId = comment.createdBy;
+  const creator = useUserData(userId);
+  if (creator.isSuccess) {
     return (
       <div className="comment">
         <img src="" alt="Commenter avatar" />
         <div>
-          <div className="comment-header"></div>
-          <div className="comment-body">{comment && comment.comment}</div>
+          <div className="comment-header">
+            {`${creator.data.name} commented ${relativeDate(
+              comment.createdDate
+            )}`}
+          </div>
+          <div className="comment-body">{comment.comment}</div>
         </div>
       </div>
     );
   }
 };
+
 export default function IssueDetails() {
   const { number } = useParams();
   const { data, isLoading, isSuccess } = useIssueData(number);
+
+  const commentsQuery = useQuery(["issues", number, "comments"], () => {
+    return fetch(`/api/issues/${number}/comments`).then((res) => res.json());
+  });
 
   if (isLoading) return <p>Loading...</p>;
   if (isSuccess)
@@ -56,16 +58,12 @@ export default function IssueDetails() {
         </header>
         <main>
           <section>
-            {/* {data.comments.map((commentId) => ( */}
-            <Comment
-              issueNumber={number}
-              commentId={data.comments[0]}
-              key={data.comments[0]}
-            />
-            {/* ))} */}
+            {commentsQuery.isSuccess &&
+              commentsQuery.data.map((c) => {
+                return <p>{c.comment}</p>;
+              })}
           </section>
         </main>
       </div>
-      // }
     );
 }
