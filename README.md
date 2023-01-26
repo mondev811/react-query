@@ -1,4 +1,4 @@
-<h3 align="center">React Query Course PRoject - <a href="https://react-query-issue-tracker.ui.dev">Issue Tracker</a></h3>
+<h3 align="center">React Query Course Project - <a href="https://react-query-issue-tracker.ui.dev">Issue Tracker</a></h3>
 
 ### Info
 
