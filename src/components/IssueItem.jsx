@@ -1,4 +1,4 @@
-import { GoComment, GoIssueOpened } from "react-icons/go";
+import { GoComment, GoIssueOpened, GoIssueClosed } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
 import { useUserData, useLabelsData } from "../helpers/queryhooks";
 import { Label } from "../components/Label";
@@ -15,7 +15,6 @@ export const IssueItem = ({
   const assigneeUser = useUserData(assignee);
   const createdByUser = useUserData(createdBy);
   const labelObjects = useLabelsData();
-
   return (
     <li>
       <div>

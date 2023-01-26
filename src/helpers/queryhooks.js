@@ -9,15 +9,9 @@ export const useLabelsData = () => {
 };
 
 export const useUserData = (userId) => {
-  const usersData = useQuery(
-    ["users", userId],
-    () => {
-      return fetch(`api/users/${userId}`).then((res) => res.json());
-    },
-    {
-      staleTime: 5000,
-    }
-  );
+  const usersData = useQuery(["users", userId], () => {
+    return fetch(`/api/users/${userId}`).then((res) => res.json());
+  });
 
   return usersData;
 };
@@ -36,4 +30,18 @@ export const useIssuesData = (filters) => {
   });
 
   return issuesQuery;
+};
+
+export const useIssueData = (issueNumber) => {
+  return useQuery(["issues", issueNumber], () => {
+    return fetch(`/api/issues/${issueNumber}`).then((res) => res.json());
+  });
+};
+
+export const useIssueComments = (issueNumber) => {
+  return useQuery(["issues", issueNumber, "comments"], () => {
+    return fetch(`/api/issues/${issueNumber}/comments`).then((res) =>
+      res.json()
+    );
+  });
 };
