@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { GoComment, GoIssueOpened, GoIssueClosed } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
 import { useUserData, useLabelsData } from "../helpers/queryhooks";
@@ -26,7 +27,7 @@ export const IssueItem = ({
       </div>
       <div className="issue-content">
         <span>
-          <a href={`/issue/${number}`}>{title}</a>
+          <Link to={`/issue/${number}`}>{title}</Link>
           {labelObjects.isSuccess &&
             labels.map((label) => {
               const labelObj = labelObjects.data.find((l) => l.id === label);
