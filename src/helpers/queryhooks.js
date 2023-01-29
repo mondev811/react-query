@@ -16,15 +16,18 @@ export const useUserData = (userId) => {
   return usersData;
 };
 
-export const useIssuesData = (filters) => {
+export const useIssuesData = (labels, status) => {
   const labelsString =
-    filters[0] === "*"
+    labels[0] === "*"
       ? ""
-      : filters.map((label) => `labels[]=${label}`).join("&");
+      : labels.map((label) => `labels[]=${label}`).join("&");
+  const statusString = status ? `&status=${status}` : "";
   const issuesQuery = useQuery({
-    queryKey: ["issues", filters],
+    queryKey: ["issues", { labels, status }],
     queryFn: () => {
-      return fetch(`/api/issues?${labelsString}`).then((res) => res.json());
+      return fetch(`/api/issues?${labelsString}${statusString}`).then((res) =>
+        res.json()
+      );
     },
     keepPreviousData: true,
   });
