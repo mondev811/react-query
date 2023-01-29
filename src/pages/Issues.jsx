@@ -2,6 +2,7 @@ import React from "react";
 import IssuesList from "../components/IssuesList";
 import LabelList from "../components/LabelList";
 import { Link } from "react-router-dom";
+import { StatusSelect } from "./StatusSelect";
 
 export default function Issues() {
   const [labelsSelected, setLabelsSelected] = React.useState(["*"]);
@@ -11,7 +12,7 @@ export default function Issues() {
       <main>
         <section>
           <h1>Issues</h1>
-          <IssuesList filters={labelsSelected} />
+          <IssuesList filters={labelsSelected} status={status} />
         </section>
         <aside>
           <LabelList
@@ -36,18 +37,3 @@ export default function Issues() {
     </div>
   );
 }
-
-const StatusSelect = ({ value, onChange }) => {
-  return (
-    <>
-      <select value={value} onChange={onChange} className="status-select">
-        <option value>Select a status to filter</option>
-        <option value="backlog">Backlog</option>
-        <option value="todo">Todo</option>
-        <option value="inProgress">In progress</option>
-        <option value="done">Done</option>
-        <option value="cancelled">Cancelled</option>
-      </select>
-    </>
-  );
-};
