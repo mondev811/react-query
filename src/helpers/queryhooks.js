@@ -1,17 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 
 export const useLabelsData = () => {
-  const labelsQuery = useQuery(["labels"], () =>
-    fetch("/api/labels").then((res) => res.json())
+  const labelsQuery = useQuery(
+    ["labels"],
+    () => fetch("/api/labels").then((res) => res.json()),
+    {
+      staleTime: 1000 * 60 * 60, //one hour
+    }
   );
 
   return labelsQuery;
 };
 
 export const useUserData = (userId) => {
-  const usersData = useQuery(["users", userId], () => {
-    return fetch(`/api/users/${userId}`).then((res) => res.json());
-  });
+  const usersData = useQuery(
+    ["users", userId],
+    () => {
+      return fetch(`/api/users/${userId}`).then((res) => res.json());
+    },
+    {
+      staleTime: 1000 * 60 * 5, //five minutes
+    }
+  );
 
   return usersData;
 };
@@ -22,15 +32,18 @@ export const useIssuesData = (labels, status) => {
       ? ""
       : labels.map((label) => `labels[]=${label}`).join("&");
   const statusString = status ? `&status=${status}` : "";
-  const issuesQuery = useQuery({
-    queryKey: ["issues", { labels, status }],
-    queryFn: () => {
+  const issuesQuery = useQuery(
+    ["issues", { labels, status }],
+    () => {
       return fetch(`/api/issues?${labelsString}${statusString}`).then((res) =>
         res.json()
       );
     },
-    keepPreviousData: true,
-  });
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60,
+    }
+  );
 
   return issuesQuery;
 };
