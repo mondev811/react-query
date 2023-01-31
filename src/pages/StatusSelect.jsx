@@ -13,7 +13,9 @@ export const StatusSelect = ({ value, onChange }) => {
       <select value={value} onChange={onChange} className="status-select">
         <option value="">Select a status to filter</option>
         {possibleStatus.map((s) => (
-          <option value={s.id}>{s.label}</option>
+          <option value={s.id} key={s.id}>
+            {s.label}
+          </option>
         ))}
       </select>
     </>
