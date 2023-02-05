@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { fetchWithError } from "./fetchWithError";
 
 export const useLabelsData = () => {
   const labelsQuery = useQuery(
@@ -35,9 +36,7 @@ export const useIssuesData = (labels, status) => {
   const issuesQuery = useQuery(
     ["issues", { labels, status }],
     () => {
-      return fetch(`/api/issues?${labelsString}${statusString}`).then((res) =>
-        res.json()
-      );
+      return fetchWithError(`/api/issues?${labelsString}${statusString}`);
     },
     {
       keepPreviousData: true,

@@ -3,7 +3,7 @@ import { useIssuesData, useSearchData } from "../helpers/queryhooks";
 import { IssueItem } from "./IssueItem";
 
 export default function IssuesList({ filters, status }) {
-  const { isLoading, isSuccess, data } = useIssuesData(filters, status);
+  const { isLoading, isError, data, error } = useIssuesData(filters, status);
   const [searchValue, setSearchValue] = React.useState("");
   const searchQuery = useSearchData(searchValue);
   return (
@@ -28,6 +28,8 @@ export default function IssuesList({ filters, status }) {
       <h2>Issues List</h2>
       {isLoading ? (
         <p>Loading issues...</p>
+      ) : isError ? (
+        <p>{error.message}</p>
       ) : searchQuery.fetchStatus === "idle" && searchQuery.isLoading ? ( //search query is disabled
         <ul className="issues-list">
           {data.map((item) => {
