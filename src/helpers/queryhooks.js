@@ -40,7 +40,6 @@ export const useIssuesData = (labels, status) => {
     },
     {
       keepPreviousData: true,
-      staleTime: 1000 * 60,
     }
   );
 
